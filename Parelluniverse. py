@@ -1,0 +1,236 @@
+from abc import ABC, abstractmethod
+
+# 1. CHARACTER CLASS
+
+class Character:
+
+    def __init__(self, name, age, profession):
+        self.name = name
+        self.age = age
+        self.profession = profession
+
+    def show_details(self):
+        print("Character Name:", self.name)
+        print("Age:", self.age)
+        print("Profession:", self.profession)
+
+# 2. UNIVERSE CLASS
+
+
+class Universe:
+
+    def __init__(self, universe_name, description):
+        self.universe_name = universe_name
+        self.description = description
+        self.characters = []
+
+    def add_character(self, character):
+        self.characters.append(character)
+        print(character.name, "has entered", self.universe_name)
+
+    def show_universe(self):
+        print("\nUniverse:", self.universe_name)
+        print("Description:", self.description)
+
+        print("\nCharacters:")
+
+        for character in self.characters:
+            print("-", character.name)
+
+    def execute_event(self, event):
+        print("\nEvent happening in", self.universe_name)
+        event.execute_event()
+
+# 3. ALTERNATE CHARACTER CLASS
+
+
+class AlternateCharacter(Character):
+
+    def __init__(self, name, age, profession, universe):
+        super().__init__(name, age, profession)
+        self.universe = universe
+
+    def show_details(self):
+        print("\nCharacter:", self.name)
+        print("Age:", self.age)
+        print("Profession:", self.profession)
+        print("Universe:", self.universe)
+
+# 4. POLYMORPHISM
+
+
+class Scientist(AlternateCharacter):
+
+    def special_ability(self):
+        print(self.name, "can conduct scientific experiments.")
+
+
+class Businessman(AlternateCharacter):
+
+    def special_ability(self):
+        print(self.name, "can manage international businesses.")
+
+
+class Astronaut(AlternateCharacter):
+
+    def special_ability(self):
+        print(self.name, "can explore outer space.")
+
+
+class Doctor(AlternateCharacter):
+
+    def special_ability(self):
+        print(self.name, "can treat patients and save lives.")
+
+
+# 5. ENCAPSULATION
+
+
+class CharacterStatus:
+
+    def __init__(self, name):
+        self.name = name
+        self.__energy = 100
+
+    def get_energy(self):
+        return self.__energy
+
+    def use_energy(self, amount):
+
+        if amount > 0 and amount <= self.__energy:
+            self.__energy -= amount
+            print(amount, "energy used.")
+
+        else:
+            print("Invalid energy amount!")
+
+    def show_status(self):
+        print("\nCharacter:", self.name)
+        print("Remaining Energy:", self.__energy)
+
+
+# 6. ABSTRACTION
+
+
+class UniverseEvent(ABC):
+
+    @abstractmethod
+    def execute_event(self):
+        pass
+
+
+class WarEvent(UniverseEvent):
+
+    def execute_event(self):
+        print("A war has started in the universe!")
+
+
+class DiscoveryEvent(UniverseEvent):
+
+    def execute_event(self):
+        print("A new planet has been discovered!")
+
+
+class PeaceEvent(UniverseEvent):
+
+    def execute_event(self):
+        print("Peace has been established in the universe!")
+
+
+# 7. MAIN PROGRAM
+
+
+print("\n= PARALLEL UNIVERSE SIMULATOR ")
+
+
+
+
+universe1 = Universe(
+    "Earth-1",
+    "A world where yash becomes a scientist."
+)
+
+universe2 = Universe(
+    "Earth-2",
+    "A world where yash becomes a businessman."
+)
+
+universe3 = Universe(
+    "Earth-3",
+    "A world where yash becomes an astronaut."
+)
+
+
+# Creating Alternate Characters
+
+yash1 = Scientist("yash", 22, "Scientist", "Earth")
+
+yash2 = Businessman("yash", 22, "Businessman", "mars")
+
+yash3 = Astronaut("yash", 22, "Astronaut", "jupiter")
+
+yash4 = Doctor("yash", 22, "Doctor", "venus")
+
+
+universe1.add_character(yash1)
+
+universe2.add_character(yash2)
+
+universe3.add_character(yash3)
+
+
+universe1.show_universe()
+
+universe2.show_universe()
+
+universe3.show_universe()
+
+
+yash1.show_details()
+
+yash2.show_details()
+
+yash3.show_details()
+
+
+print("\nCHARACTER ABILITIES ")
+
+characters = [yash1, yash2, yash3, yash4]
+
+for character in characters:
+    character.special_ability()
+
+
+print("\nCHARACTER ENERGY STATUS ")
+
+status = CharacterStatus("yash")
+
+status.show_status()
+
+status.use_energy(30)
+
+status.show_status()
+
+status.use_energy(40)
+
+status.show_status()
+
+status.use_energy(50)
+
+print("\nUNIVERSE EVENTS ")
+
+event1 = WarEvent()
+
+event2 = DiscoveryEvent()
+
+event3 = PeaceEvent()
+
+
+universe1.execute_event(event1)
+
+universe2.execute_event(event2)
+
+universe3.execute_event(event3)
+
+
+print("\nSIMULATION COMPLETED ")
